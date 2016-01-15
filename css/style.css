@@ -1,0 +1,165 @@
+body{
+	width: 100%;
+	height: 100%;
+	background-color: #FFF;
+	color: #333;
+}
+
+h1{
+	padding-bottom: 30px;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.text-center h3,
+.text-center h4{
+	margin-top: 10px;
+}
+
+.btn-pomo,
+.btn-pomo:hover,
+.btn-pomo:active{
+	background-color: #FFF;
+}
+
+.btn-pomo:hover,
+.btn-pomo:active{
+	color: #777;
+}
+
+.text-bold{
+	font-weight: 600;
+}
+
+.circle{
+	z-index: 10;
+	position: absolute;
+	margin-top: 50px;
+	left: 50%;
+	margin-left: -100px;
+	border-radius: 100px;
+	width: 200px;
+	height: 200px;
+	background-color: #333;
+}
+
+.btn-start{
+	z-index: 42;
+	position: absolute;
+	margin-top: 50px;
+	left: 50%;
+	margin-left: -100px;
+	width: 200px;
+	height: 200px;
+	background-color: transparent;
+	color: #777;
+}
+
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active{
+	outline: 0;
+	outline-style: none;
+}
+
+.btn-start h1{
+	line-height: 200px;
+	margin: 0;
+	padding: 0;
+}
+
+.mask{
+	z-index: 20;
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	margin-left: -100px;
+	width: 200px;
+	height: 0px;
+	/*background-color: #F3EFE0;*/
+	background-color: #FFF;
+}
+
+.circle-border{
+	z-index: 30;
+	position: absolute;
+	margin-top: 45px;
+	left: 50%;
+	margin-left: -105px;
+	border-radius: 105px;
+	border: 2px solid #333;
+	width: 210px;
+	height: 210px;
+	background-color: transparent;
+}
+
+.circle-break{
+	z-index: 50;
+	position: absolute;
+	margin-top: 170px;
+	left: 50%;
+	margin-left: -150px;
+	border-radius: 60px;
+	width: 120px;
+	height: 120px;
+	background-color: #333;
+}
+
+.circle-text-break{
+	z-index: 80;
+	position: absolute;
+	margin-top: 170px;
+	left: 50%;
+	margin-left: -150px;
+	width: 120px;
+	height: 120px;
+	background-color: transparent;
+	color: #777;
+}
+
+.circle-text-break h2{
+	line-height: 120px;
+	margin: 0;
+	padding: 0;
+}
+
+.mask-break{
+	z-index: 60;
+	position: absolute;
+	top: 170px;
+	left: 50%;
+	margin-left: -150px;
+	/*border-radius: 60px 60px 0px 0px;*/
+	width: 120px;
+	height: 120px;
+	/*background-color: #F3EFE0;*/
+	background-color: #FFF;
+}
+
+.circle-border-break{
+	z-index: 70;
+	position: absolute;
+	margin-top: 165px;
+	left: 50%;
+	margin-left: -155px;
+	border-radius: 65px;
+	border: 2px solid #333;
+	width: 130px;
+	height: 130px;
+	background-color: transparent;
+}
+
+.buffer{
+	z-index: 45;
+	position: absolute;
+	margin-top: 165px;
+	left: 50%;
+	margin-left: -155px;
+	border-radius: 65px;
+	width: 130px;
+	height: 130px;
+	background-color: #FFF;
+}
