@@ -1,35 +1,55 @@
 var running = false;
+var breakrunning = false;
+var stophover = false;
+var interval;
 
 window.onload = function(){
 		
 	document.getElementById("button-start").onclick = function(){
-		if (running){
+		if (running || breakrunning){
 			running = false;
+      breakrunning = false;
+      window.clearInterval(interval);
+			var time = document.getElementById("timer-time");
+			time.innerHTML = 'START';
+      var mask = document.getElementById("timer-mask");
+      mask.style.height = "0%";
+      
+      var time = document.getElementById("breaktime");
+      var timer = document.getElementById("timer-break");
+			timer.innerHTML = time.innerHTML;
+      
+      var mask = document.getElementById("break-mask");
+      mask.style.height = "0%";
 			//clearInterval(window.interval);
 		} else {
-			running = true;
 			startTimer();
 		}
 	}
 
 	document.getElementById("button-start").onmouseover = function(){
-		if (running){
-			//var time = document.getElementById("timer-time");
-			//time.innerHTML = 'STOP';
+		if (running || breakrunning){
+			var time = document.getElementById("timer-time");
+			time.innerHTML = 'STOP';
+			stophover = true;
 		}
 	}
 	
 	document.getElementById("button-start").onmouseout = function(){
-		if (running){
-			//var time = document.getElementById("timer-time");
-			//time.innerHTML = 'START';
+		if (running || breakrunning){
+			stophover = false;
 		}
 	}
 		
 		
 	document.getElementById("break-minus").onclick = function(){
 		var time = document.getElementById("breaktime");
-		time.innerHTML = parseInt(time.innerHTML)-1;
+		var timeInt = parseInt(time.innerHTML);
+		if (timeInt >= 1){
+			time.innerHTML = parseInt(timeInt)-1;
+		} else {
+			time.innerHTML = 60;
+		}
 		if (!running){
 			var timer = document.getElementById("timer-break");
 			timer.innerHTML = time.innerHTML;
@@ -38,7 +58,13 @@ window.onload = function(){
 	
 	document.getElementById("break-plus").onclick = function(){
 		var time = document.getElementById("breaktime");
-		time.innerHTML = parseInt(time.innerHTML)+1;
+		var timeInt = parseInt(time.innerHTML);
+		if (timeInt < 60) {
+			time.innerHTML = parseInt(timeInt)+1;
+		} else {
+			time.innerHTML = 0;
+		}
+		
 		if (!running){
 			var timer = document.getElementById("timer-break");
 			timer.innerHTML = time.innerHTML;
@@ -47,7 +73,12 @@ window.onload = function(){
 	
 	document.getElementById("timer-minus").onclick = function(){
 		var time = document.getElementById("time");
-		time.innerHTML = parseInt(time.innerHTML)-1;
+		var timeInt = parseInt(time.innerHTML);
+		if (timeInt >= 1){
+			time.innerHTML = parseInt(timeInt)-1;
+		} else {
+			time.innerHTML = 60;
+		}
 		/*if (!running){
 			var timer = document.getElementById("timer-time");
 			timer.innerHTML = time.innerHTML;
@@ -56,11 +87,12 @@ window.onload = function(){
 	
 	document.getElementById("timer-plus").onclick = function(){
 		var time = document.getElementById("time");
-		time.innerHTML = parseInt(time.innerHTML)+1;
-		/*if (!running){
-			var timer = document.getElementById("timer-time");
-			timer.innerHTML = time.innerHTML;
-		}*/
+		var timeInt = parseInt(time.innerHTML);
+		if (timeInt < 60) {
+			time.innerHTML = parseInt(timeInt)+1;
+		} else {
+			time.innerHTML = 0;
+		}
 	}
 	
 }
@@ -76,11 +108,49 @@ function addNumber(str){
 	}
 }
 
+function startTimer(){
+	running = true;
+	var duration = document.getElementById("time");
+	var maskid =  "timer-mask";
+	duration = parseInt(duration.innerHTML);
+	var clockid = "timer-time";
+	var endtime = initializeClock(duration, clockid);
+	interval = window.setInterval(function(){
+		if (!stophover){
+			var timeleft = setClock(endtime, duration, clockid, maskid);
+			if (timeleft <= 0){
+				window.clearInterval(interval);
+				running = false;
+				startBreak();
+			}
+		}
+	},1000);
+}
+
+function startBreak(){
+  breakrunning = true;
+	var duration = document.getElementById("breaktime");
+	var maskid =  "break-mask";
+	duration = parseInt(duration.innerHTML);
+	var clockid = "timer-break";
+	var endtime = initializeClock(duration, clockid);
+	interval = window.setInterval(function(){
+		var timeleft = setClock(endtime, duration, clockid, maskid);
+		if (timeleft <= 0){
+			window.clearInterval(interval);
+      breakrunning = false;
+			startTimer();
+		}
+	},1000);
+
+}
+
 function initializeClock(duration, id){
 	var endtime = new Date();
 	endtime.setMinutes(endtime.getMinutes()+duration);
 	return endtime;
 }
+
 
 function setClock(endtime, duration, id, maskid){
 	var timeLeft = Date.parse(endtime) - Date.parse(new Date());
@@ -112,38 +182,6 @@ function setClock(endtime, duration, id, maskid){
 	var mask = document.getElementById(maskid);
 	var durationSeconds = duration * 60;
 	//get mask height here!!!
-	mask.style.height = Math.floor(120 * (1-(durationSeconds-secondsLeft)/durationSeconds))+"px";
+	mask.style.height = Math.floor(100 * (1-(durationSeconds-secondsLeft)/durationSeconds))+"%";
 	return secondsLeft;
-}
-
-function startTimer(){
-	var duration = document.getElementById("time");
-	var maskid =  "timer-mask";
-	duration = parseInt(duration.innerHTML);
-	var clockid = "timer-time";
-	var endtime = initializeClock(duration, clockid);
-	var interval = setInterval(function(){
-		var timeleft = setClock(endtime, duration, clockid, maskid);
-		if (timeleft <= 0){
-			clearInterval(interval);
-			running = false;
-			startBreak();
-		}
-	},1000);
-}
-
-function startBreak(){
-	var duration = document.getElementById("breaktime");
-	var maskid =  "break-mask";
-	duration = parseInt(duration.innerHTML);
-	var clockid = "timer-break";
-	var endtime = initializeClock(duration, clockid);
-	var interval = setInterval(function(){
-		var timeleft = setClock(endtime, duration, clockid, maskid);
-		if (timeleft <= 0){
-			clearInterval(interval);
-			startTimer();
-		}
-	},1000);
-
 }
